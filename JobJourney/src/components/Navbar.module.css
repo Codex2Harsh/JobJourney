@@ -1,0 +1,26 @@
+*{
+  margin: 0;padding: 0;
+}
+.containerNav{
+  border-bottom: 3px solid rgba(176, 173, 173, 0.451);
+  height: 100px;
+  display: flex;
+}
+.titleMail{
+  margin:10px 25px;
+}
+.buttons{
+  display: flex;
+  margin-left: auto;
+  padding: 10px;
+  align-items: center;
+}
+.AddJob{
+  margin:10px;
+}
+.logout{
+  margin: 20px;
+}
+.lgbtn{
+  font-size: 28px;
+}
