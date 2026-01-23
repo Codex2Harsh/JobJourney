@@ -4,9 +4,8 @@
 }
 .cards{
   border: 2px solid black;
-  margin: 0px 60px 20px 60px;
+  margin: 0px 60px 20px 65px;
   border-radius: 15px;
-  height: 310px;
   width: 395px;
   display: flex;
   position: relative;

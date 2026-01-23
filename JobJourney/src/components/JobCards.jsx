@@ -4,23 +4,25 @@ import { MdLocationPin } from "react-icons/md";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { FaBriefcase } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
-let JobCards = ()=>{
+let JobCards = ({job,updateStatus})=>{
   return (
     <div className={`${style.cards}`}>
       <div className={`${style.Jobinfo}`}>
-        <div className={`${style.companyName}`}>Google</div>
-        <div className={`${style.position}`}>SDE</div>
-        <div className={`${style.location}`}> <MdLocationPin /> Banglore</div>
-        <div className={`${style.jobtype}`}> <FaBriefcase /> Internship</div>
-        <div className={`${style.dates}`}> <FaCalendarAlt /> 22/1/2025</div>
+        <div className={`${style.companyName}`}>{job.company}</div>
+        <div className={`${style.position}`}>{job.position}</div>
+        <div className={`${style.location}`}> <MdLocationPin /> {job.location}</div>
+        <div className={`${style.jobtype}`}> <FaBriefcase /> {job.type}</div>
+        <div className={`${style.dates}`}> <FaCalendarAlt /> {job.date}</div>
         <div className={style.statusBox}>
        <label className={style.statusLabel}>Status</label>
-        <select className={style.statusSelect}>
+        <select className={style.statusSelect}
+          value={job.status}
+          onChange={(e) => updateStatus(job.id, e.target.value)}>
           <option>Applied</option>
           <option>Incoming Rounds</option>
           <option>Interview</option>
           <option>Job Offer</option>
-          <option>Rejected</option>
+          
         </select>
       </div>
 
