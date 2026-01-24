@@ -1,12 +1,12 @@
 import styles from "./loginForm.module.css";
 
-export default function LoginForm() {
+export default function LoginForm({onClosebtn}) {
   return (
     <div className={styles.overlay}>
       <div className={styles.modalBox}>
         <div className={styles.modalHeader}>
           <h2>Add Job Application</h2>
-          <button className={styles.closeButton}>×</button>
+          <button className={styles.closeButton} onClick={onClosebtn} >×</button>
         </div>
         <form className={styles.form}>
           <div className={styles.inputGroup}>
@@ -51,7 +51,7 @@ export default function LoginForm() {
           </div>
 
           <div className={styles.buttonRow}>
-            <button type="button" className={styles.cancelButton}>
+            <button type="button" className={styles.cancelButton} onClick={onClosebtn} >
               Cancel
             </button>
             <button type="submit" className={styles.submitButton}>

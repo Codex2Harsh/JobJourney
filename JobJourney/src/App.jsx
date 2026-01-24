@@ -1,40 +1,29 @@
 import { useState } from 'react'
 import { useEffect } from "react";
-import './App.css'
-import NavComp from './components/Navbar'
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import StatusCards from './components/StatusCards';
 import LogInPg from './components/LogInPg';
-import LoginForm from './loginForm';
-
+import Dashboard from './components/Dashboard';
 function App() {
-  const [jobs,setjobs] = useState(()=>{
-    const savedjobs = localStorage.getItem("jobs");
-    return savedjobs? JSON.parse(savedjobs):[
-  { id: 1, company: "Google", position: "SDE", location: "Bangalore", type: "Internship", date: "22/1/2025", status: "Applied" },
-  { id: 2, company: "Microsoft", position: "SDE", location: "Hyderabad", type: "Full Time", date: "10/2/2025", status: "Interview" },
-  { id: 3, company: "Amazon", position: "SDE", location: "Delhi", type: "Internship", date: "15/2/2025", status: "Incoming Rounds" },
-  { id: 4, company: "Meta", position: "SDE", location: "Remote", type: "Full Time", date: "20/2/2025", status: "Job Offer" },
-]});
-
-useEffect(()=>{
-  localStorage.setItem("jobs", JSON.stringify(jobs));
-},[jobs]);
-
-const updateStatus = (id, status) => {
-  setjobs(jobs.map(job =>
-    job.id === id ? { ...job, status } : job
-  ));
-};
+  // for login page
+  const[showLogIn, setshowLogIn] = useState(false);
+  // for email disply on navbar
+  const[userEmail, setUserEmail] = useState(()=>{
+    const savedMails = localStorage.getItem("userEmail");
+    return savedMails? JSON.parse(savedMails):("")});
+  useEffect(()=>{
+  localStorage.setItem("userEmail", JSON.stringify(userEmail));
+},[userEmail]);
 return (
   <>
       <div>
-    <NavComp />
-    <StatusCards jobs = {jobs} updateStatus={updateStatus}/>  
-    <LogInPg></LogInPg>
-    <LoginForm></LoginForm>
+        {
+          showLogIn ?
+          <LogInPg onLogIn={()=>setshowLogIn(false)} setUserEmail={setUserEmail} />:
+          <Dashboard onLogOut={()=>setshowLogIn(true)} userEmail={userEmail} />
+        }
       </div>
-    </>
+  </>
   )
 }
 

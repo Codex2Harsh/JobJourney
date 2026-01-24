@@ -49,7 +49,7 @@
 import style from "./StatusCards.module.css"
 import JobCards from "./JobCards"
 const columnNames = ["Applied", "Incoming Rounds", "Interview", "Job Offer"];
-let StatusCards = ({ jobs, updateStatus }) => {
+let StatusCards = ({ jobs, updateStatus, deleteJob }) => {
   return (
     <div className={style.stageGrid}>
       {columnNames.map(status => (
@@ -63,7 +63,7 @@ let StatusCards = ({ jobs, updateStatus }) => {
             </div>
           </div>
           {jobs.filter(job => job.status === status).map(job => (
-              <JobCards key={job.id} job={job} updateStatus={updateStatus} />
+              <JobCards key={job.id} job={job} updateStatus={updateStatus} deleteJob ={deleteJob} />
             ))}
         </div>))}
     </div>

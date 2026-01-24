@@ -4,7 +4,7 @@ import { MdLocationPin } from "react-icons/md";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { FaBriefcase } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
-let JobCards = ({job,updateStatus})=>{
+let JobCards = ({job,updateStatus, deleteJob})=>{
   return (
     <div className={`${style.cards}`}>
       <div className={`${style.Jobinfo}`}>
@@ -29,7 +29,7 @@ let JobCards = ({job,updateStatus})=>{
       </div>
       <div className={`${style.editBtns}`}>
         <div className={`${style.edit}`}><MdOutlineModeEdit /></div>
-        <div className={`${style.delete} btn btn-outline-danger`}><i className="bi bi-trash"></i></div>
+        <div className={`${style.delete} btn btn-outline-danger`} onClick ={()=>deleteJob(job.id)}  ><i className="bi bi-trash"></i></div>
       </div>
     </div>
   )

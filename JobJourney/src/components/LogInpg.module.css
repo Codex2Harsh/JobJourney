@@ -13,7 +13,7 @@
   border-radius: 18px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   width: 30vw;
-  height: 51vh;
+  height: 53vh;
   text-align: center;
 }
 
@@ -99,6 +99,19 @@
 }
 .demoText {
   margin-top: 18px;
-  font-size: 13px;
-  color: #6b7280;
+  font-size: 15px;
+  color: #505769;
+}
+.formGroup .errorInput {
+  border: 1px solid red ;
+}
+
+.formGroup input.errorInput:focus {
+  border: 1px solid red ;
+}
+
+.errorText {
+  color: red;
+  font-size: 15px;
+  margin: 3px 3px;
 }
