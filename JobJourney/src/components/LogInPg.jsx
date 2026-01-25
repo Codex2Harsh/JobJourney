@@ -22,6 +22,8 @@ let LogInPg = ({onLogIn, setUserEmail}) => {
       valid = false;
     }
     if(valid){
+      //storing ot let the user stay logged in.
+      localStorage.setItem("loggedIn", "true");
       setUserEmail(email);
       onLogIn();
     }
