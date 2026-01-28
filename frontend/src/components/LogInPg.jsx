@@ -6,28 +6,42 @@ let LogInPg = ({onLogIn, setUserEmail}) => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passError, setPassError] = useState("");
-  const handler=()=>{
-    let valid = true;
-    setEmailError("");
-    setPassError("");
-    if(!email){
-      setEmailError("Enter a valid email.")
-      valid = false;
-    }else if (!email.endsWith("@gmail.com")){
-      setEmailError("Email must end with @gmail.com")
-      valid = false;
-    }
-    if(password.length < 6){
-      setPassError("Password must have 6 characters.")
-      valid = false;
-    }
-    if(valid){
-      //storing ot let the user stay logged in.
-      localStorage.setItem("loggedIn", "true");
-      setUserEmail(email);
-      onLogIn();
-    }
-  };
+  const handler = async () => {
+  let valid = true;
+  setEmailError("");
+  setPassError("");
+
+  if (!email) {
+    setEmailError("Enter a valid email.");
+    valid = false;
+  } else if (!email.endsWith("@gmail.com")) {
+    setEmailError("Email must end with @gmail.com");
+    valid = false;
+  }
+  if (password.length < 6) {
+    setPassError("Password must have 6 characters.");
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/login", {
+      email,
+      password
+    });
+
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("loggedIn", "true");
+    setUserEmail(email);
+    onLogIn();
+  } catch (err) {
+    alert("Login failed. Register first.");
+    console.log(err);
+  }
+};
+
+
 
   return (
     <div className={styles.container}>

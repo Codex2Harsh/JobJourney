@@ -1,8 +1,7 @@
 import styles from "./AddJobForm.module.css";
 import { useState, useEffect } from 'react'
-import axios from "axios";
 
-export default function AddJobForm({onClosebtn, addJob, editingJob}) {
+export default function AddJobForm({onClosebtn, addJob,updateJob, editingJob}) {
   //defn useState to structure the values from input
   const [formData, setFormData] = useState({
   company: "",
@@ -17,12 +16,33 @@ const handleChange = (e)=>{
   setFormData(prev=>({...prev,[name]:value}));
 }
 //passing the value to parent
-const addInput=(e)=>{
-  //avoidign refresh
+// const addInput=(e)=>{
+//   //avoidign refresh
+//   e.preventDefault();
+//   // getItem(formData);
+//   addJob(formData);
+//   //resetting form
+//   setFormData({
+//     company: "",
+//     position: "",
+//     location: "",
+//     type: "",
+//     status: "Applied"
+//   });
+
+//   if (editingJob) {
+//     onClosebtn();
+//   }
+// }
+const addInput = (e) => {
   e.preventDefault();
-  // getItem(formData);
-  addJob(formData);
-  //resetting form
+
+  if (editingJob) {
+    updateJob(editingJob._id, formData);   
+  } else {
+    addJob(formData);                      
+  }
+
   setFormData({
     company: "",
     position: "",
@@ -31,16 +51,24 @@ const addInput=(e)=>{
     status: "Applied"
   });
 
-  if (editingJob) {
-    onClosebtn();
-  }
-}
+  onClosebtn();
+};
+
 //to update job
 useEffect(() => {
   if (editingJob) {
-    setFormData(editingJob);
+    setFormData({
+      company: editingJob.company || "",
+      position: editingJob.position || "",
+      location: editingJob.location || "",
+      type: editingJob.type || "",
+      status: editingJob.status || "Applied"
+    });
   }
 }, [editingJob]);
+
+
+
 
   return (
     <div className={styles.overlay}>
@@ -49,7 +77,7 @@ useEffect(() => {
           <h2>{editingJob ? "Edit Job" : "Add Job Application"}</h2>
           <button className={styles.closeButton} onClick={onClosebtn} >×</button>
         </div>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={addInput}>
           <div className={styles.inputGroup}>
             <label>Company Name </label>
             <input type="text"  placeholder="e.g., Google, Microsoft" name="company" value={formData.company} onChange={handleChange} />
@@ -90,10 +118,10 @@ useEffect(() => {
           <div className={styles.inputGroup}>
             <label>Status </label>
             <select name= "status" value={formData.status} onChange={handleChange}>
-              <option>Applied</option>
-              <option>Job Offer</option>
-              <option>Incoming Rounds</option>
-              <option>Interview</option>
+              <option value="Applied">Applied</option>
+              <option value="Incoming Rounds">Incoming Rounds</option>
+              <option value="Interview">Interview</option>
+              <option value="Job Offer">Job Offer</option>
             </select>
           </div>
 
@@ -101,7 +129,7 @@ useEffect(() => {
             <button type="button" className={styles.cancelButton} onClick={onClosebtn} >
               Cancel
             </button>
-            <button type="submit" className={styles.submitButton} onClick={addInput}>
+            <button type="submit" className={styles.submitButton} >
               {editingJob ? "Update Job" : "Add Job"}
             </button>
           </div>

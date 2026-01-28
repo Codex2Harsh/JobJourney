@@ -21,10 +21,14 @@ let Dashboard = ({ onLogOut, userEmail }) => {
   //   localStorage.setItem("jobs", JSON.stringify(jobs));
   // }, [jobs]);
 
-useEffect(()=>{
-  axios.get("http://localhost:5000/api/jobs")
-  .then(res => setjobs(res.data));
+useEffect(() => {
+  axios.get("http://localhost:5000/api/jobs", {
+    headers: {
+      Authorization: localStorage.getItem("token")
+    }
+  }).then(res => setjobs(res.data));
 }, []);
+
 
   // const updateStatus = (id, status) => {
   //   setjobs(jobs.map(job =>
@@ -32,24 +36,46 @@ useEffect(()=>{
   //   ));
   // };
 
-  //updating status backend
   const updateStatus = async (id, status) => {
-  await axios.put(`http://localhost:5000/api/jobs/${id}`, { status });
-  setjobs(jobs.map(job =>
-    job._id === id ? { ...job, status } : job
-  ));
+  try {
+    const res = await axios.put(`http://localhost:5000/api/jobs/${id}`, { status }, {
+      headers: { Authorization: localStorage.getItem("token") }
+    });
+    setjobs(prev => prev.map(job => job._id === id ? res.data : job));
+  } catch (err) {
+    console.log("Status update error:", err);
+  }
 };
+useEffect(() => {
+  console.log("Jobs state:", jobs);
+}, [jobs]);
+
+  //updating status backend
+  const updateJob = async (id, updatedData) => {
+  try {
+    const res = await axios.put(`http://localhost:5000/api/jobs/${id}`, updatedData, {
+      headers: { Authorization: localStorage.getItem("token") }
+    });
+    setjobs(prev => prev.map(job => job._id === id ? res.data : job));
+  } catch (err) {
+    console.log("Update error:", err);
+  }
+};
+
   //to display the job form
   const [showForm, setshowForm] = useState(false);
   // to functionalize the delete button
   // const deleteJob = (id) => {
   //   setjobs(jobs.filter(job => job.id != id));
   // }
-  //delete job backend
+  //delete job backend 
   const deleteJob = async (id) => {
-  await axios.delete(`http://localhost:5000/api/jobs/${id}`);
-  setjobs(jobs.filter(job => job._id !== id));
+  await axios.delete(`http://localhost:5000/api/jobs/${id}`, {
+    headers: { Authorization: localStorage.getItem("token") }
+  });
+  setjobs(prev => prev.filter(job => job._id !== id));
 };
+
   //to add a new job using addjobbtn
   // const [formData, setFormData] = useState({
   // company: "",
@@ -84,12 +110,16 @@ useEffect(()=>{
 //updating on backend
 const addJob = async (formData) => {
   try {
-    const res = await axios.post("http://localhost:5000/api/jobs", formData);
-    setjobs([...jobs, res.data]);
+    const res = await axios.post("http://localhost:5000/api/jobs", formData, {
+      headers: { Authorization: localStorage.getItem("token") }
+    });
+    setjobs(prev => [...prev, res.data]);
   } catch (err) {
     console.log("Add job error:", err);
   }
 };
+
+console.log("Jobs state:", jobs);
 
   //to update an existing card.
   const [editingJob, setEditingJob] = useState(null);
@@ -101,7 +131,7 @@ const addJob = async (formData) => {
     <>
       <NavComp onAdClick={() => setshowForm(true)} onLogOut={onLogOut} userEmail={userEmail} />
       <StatusCards jobs={jobs} updateStatus={updateStatus} deleteJob={deleteJob} onEdit={handleEdit} />
-      {showForm && <AddJobForm onClosebtn={() => setshowForm(false)} addJob={addJob} editingJob={editingJob} />}
+      {showForm && <AddJobForm onClosebtn={() => setshowForm(false)} addJob={addJob} updateJob={updateJob} editingJob={editingJob} />}
     </>
   );
 }

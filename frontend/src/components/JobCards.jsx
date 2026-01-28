@@ -12,7 +12,7 @@ let JobCards = ({job,updateStatus, deleteJob, onEdit})=>{
         <div className={`${style.position}`}>{job.position}</div>
         <div className={`${style.location}`}> <MdLocationPin /> {job.location}</div>
         <div className={`${style.jobtype}`}> <FaBriefcase /> {job.type}</div>
-        <div className={`${style.dates}`}> <FaCalendarAlt /> {job.date}</div>
+        <div className={`${style.dates}`}> <FaCalendarAlt /> {job.date ? new Date(job.date).toLocaleDateString() : "N/A"} </div>
         <div className={style.statusBox}>
        <label className={style.statusLabel}>Status</label>
         <select className={style.statusSelect}
@@ -23,10 +23,8 @@ let JobCards = ({job,updateStatus, deleteJob, onEdit})=>{
           <option>Incoming Rounds</option>
           <option>Interview</option>
           <option>Job Offer</option>
-          
         </select>
       </div>
-
       </div>
       <div className={`${style.editBtns}`}>
         <div className={`${style.edit}`}

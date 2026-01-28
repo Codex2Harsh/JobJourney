@@ -6,7 +6,8 @@ const jobSchema = new mongoose.Schema({
   location: String,
   type: String,
   status: String,
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
 });
 
 module.exports = mongoose.model("Job", jobSchema);

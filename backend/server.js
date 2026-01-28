@@ -23,3 +23,6 @@ const jobRoutes = require("./routes/jobRoutes");
 app.use("/api/jobs", jobRoutes);
 
 console.log(process.env.MONGO_URI);
+
+const authRoutes = require("./routes/authRoutes");
+app.use("/api/auth", authRoutes);
