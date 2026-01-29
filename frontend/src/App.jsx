@@ -1,38 +1,54 @@
-import { useState } from 'react'
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import LogInPg from './components/LogInPg';
 import Dashboard from './components/Dashboard';
+import Signup from './components/Signup';
+
 function App() {
-  // for login page to persist
-  const [showLogIn, setshowLogIn] = useState(() => {
+
+  const [showLogin, setShowLogin] = useState(() => {
     const loggedIn = localStorage.getItem("loggedIn");
     return loggedIn ? false : true;
   });
-  // for email disply on navbar
+
+  const [showSignup, setShowSignup] = useState(false);
+
   const [userEmail, setUserEmail] = useState(() => {
-    const savedMails = localStorage.getItem("userEmail");
-    return savedMails ? JSON.parse(savedMails) : ("")
+    const saved = localStorage.getItem("userEmail");
+    return saved ? JSON.parse(saved) : "";
   });
+
   useEffect(() => {
     localStorage.setItem("userEmail", JSON.stringify(userEmail));
   }, [userEmail]);
+
   return (
     <>
-      <div>
-        {
-          showLogIn ?
-            <LogInPg onLogIn={() => setshowLogIn(false)} setUserEmail={setUserEmail} /> :
-            <Dashboard
-              onLogOut={() => {
-                localStorage.removeItem("loggedIn");
-                setshowLogIn(true);
-              }} userEmail={userEmail} />
-        }
-      </div>
+      {showLogin && !showSignup && (
+        <LogInPg
+          onLogIn={() => setShowLogin(false)}
+          setUserEmail={setUserEmail}
+          onGoSignup={() => setShowSignup(true)}
+        />
+      )}
+
+      {showSignup && (
+        <Signup onGoLogin={() => setShowSignup(false)} />
+      )}
+
+      {!showLogin && !showSignup && (
+        <Dashboard
+          onLogOut={() => {
+            localStorage.removeItem("loggedIn");
+            setShowLogin(true);
+          }}
+          userEmail={userEmail}
+        />
+      )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

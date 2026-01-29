@@ -29,3 +29,20 @@
   margin: 4px 3px;
   color: rgb(70, 70, 120);
 }
+@media (max-width: 768px) {
+  .containerNav {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .buttons {
+    margin-left: 0;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .lgbtn {
+    font-size: 20px;
+  }
+}

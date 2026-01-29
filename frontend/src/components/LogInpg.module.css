@@ -12,8 +12,9 @@
   padding: 40px 50px;
   border-radius: 18px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  width: 30vw;
-  height: 53vh;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
   text-align: center;
 }
 
@@ -114,4 +115,15 @@
   color: red;
   font-size: 15px;
   margin: 3px 3px;
+}
+@media (max-width: 600px) {
+  .title {
+    font-size: 24px;
+  }
+  .formGroup label {
+    font-size: 16px;
+  }
+  .formGroup input {
+    font-size: 14px;
+  }
 }

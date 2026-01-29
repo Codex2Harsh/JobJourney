@@ -17,12 +17,12 @@ app.get("/", (req,res)=>{
   res.send("Backend is running...");
 });
 
-app.listen(process.env.PORT, ()=> console.log("Server running"));
+app.listen(process.env.PORT, ()=> console.log("Server running",process.env.PORT));
 
 const jobRoutes = require("./routes/jobRoutes");
-app.use("/api/jobs", jobRoutes);
+const authRoutes = require("./routes/authRoutes");
 
 console.log(process.env.MONGO_URI);
 
-const authRoutes = require("./routes/authRoutes");
+app.use("/api/jobs", jobRoutes);
 app.use("/api/auth", authRoutes);

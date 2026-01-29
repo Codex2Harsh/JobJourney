@@ -4,11 +4,12 @@
 }
 .cards{
   border: 2px solid black;
-  margin: 0px 60px 20px 65px;
   border-radius: 15px;
-  width: 395px;
-  display: flex;
-  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 2vh 3vw;
+  flex-wrap: wrap;
+  position:relative;
 }
 .editBtns{
   position: absolute;
@@ -69,4 +70,15 @@
 .statusSelect:focus {
   border-color: #4f46e5;
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+@media (max-width: 768px) {
+  .companyName {
+    font-size: 22px;
+  }
+  .location,
+  .jobtype,
+  .dates {
+    font-size: 14px;
+  }
 }

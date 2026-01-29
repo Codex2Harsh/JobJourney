@@ -1,7 +1,8 @@
 import {useState} from "react";
 import styles from"./LogInpg.module.css"
 import { IoBriefcaseSharp } from "react-icons/io5";
-let LogInPg = ({onLogIn, setUserEmail}) => {
+import axios from "axios";
+let LogInPg = ({onLogIn, setUserEmail, onGoSignup}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -31,9 +32,12 @@ let LogInPg = ({onLogIn, setUserEmail}) => {
       password
     });
 
+    //saving the token
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("loggedIn", "true");
+    //saving the mail
     setUserEmail(email);
+    //from here to dashboard
     onLogIn();
   } catch (err) {
     alert("Login failed. Register first.");
@@ -67,7 +71,8 @@ let LogInPg = ({onLogIn, setUserEmail}) => {
       </div>
     <button className={styles.loginBtn} onClick={handler} >Login</button>
       <p className={styles.signupText}>
-        Don't have an account? <span>Sign up</span>
+        Don't have an account? 
+        <span onClick={onGoSignup}> Sign up</span>
       </p>
     </div> 
     <p className={styles.demoText}>

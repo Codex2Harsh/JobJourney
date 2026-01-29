@@ -16,13 +16,13 @@ router.get("/", auth, async (req, res) => {
 });
 
 // UPDATE job
-router.put("/:id", async (req,res)=>{
+router.put("/:id",auth, async (req,res)=>{
   const job = await Job.findByIdAndUpdate(req.params.id, req.body, {new:true});
   res.json(job);
 });
 
 // DELETE job
-router.delete("/:id", async (req,res)=>{
+router.delete("/:id",auth, async (req,res)=>{
   await Job.findByIdAndDelete(req.params.id);
   res.json({message:"Deleted"});
 });
