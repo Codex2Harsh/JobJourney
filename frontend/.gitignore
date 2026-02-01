@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Environment variables
+.env
+.env.*
+
+# Vercel
+.vercel
+
+# Production build (for CRA compatibility)
+build/
