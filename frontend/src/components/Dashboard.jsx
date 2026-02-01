@@ -72,9 +72,9 @@ console.log("Jobs state:", jobs);
   };
   return (
     <>
-      <NavComp onAdClick={() => setshowForm(true)} onLogOut={onLogOut} userEmail={userEmail} />
+      <NavComp onAdClick={() => {setEditingJob(null);setshowForm(true)}} onLogOut={onLogOut} userEmail={userEmail} />
       <StatusCards jobs={jobs} updateStatus={updateStatus} deleteJob={deleteJob} onEdit={handleEdit} />
-      {showForm && <AddJobForm onClosebtn={() => setshowForm(false)} addJob={addJob} updateJob={updateJob} editingJob={editingJob} />}
+      {showForm && <AddJobForm onClosebtn={() => {setshowForm(false);setEditingJob(null)}} addJob={addJob} updateJob={updateJob} editingJob={editingJob} />}
     </>
   );
 }
