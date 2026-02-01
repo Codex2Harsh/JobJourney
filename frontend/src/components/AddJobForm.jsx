@@ -15,25 +15,6 @@ const handleChange = (e)=>{
   const{name,value} = e.target;
   setFormData(prev=>({...prev,[name]:value}));
 }
-//passing the value to parent
-// const addInput=(e)=>{
-//   //avoidign refresh
-//   e.preventDefault();
-//   // getItem(formData);
-//   addJob(formData);
-//   //resetting form
-//   setFormData({
-//     company: "",
-//     position: "",
-//     location: "",
-//     type: "",
-//     status: "Applied"
-//   });
-
-//   if (editingJob) {
-//     onClosebtn();
-//   }
-// }
 const addInput = (e) => {
   e.preventDefault();
 
@@ -66,9 +47,6 @@ useEffect(() => {
     });
   }
 }, [editingJob]);
-
-
-
 
   return (
     <div className={styles.overlay}>
